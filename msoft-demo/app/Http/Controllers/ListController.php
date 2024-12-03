@@ -37,9 +37,9 @@ class ListController extends Controller
         ];
 
         // Add orders with food items
-        $this->orderManager->addOrder(new Order(1, 'Pending', 30, $foodItemsOrder1));
-        $this->orderManager->addOrder(new Order(2, 'In Progress', 20, $foodItemsOrder2));
-        $this->orderManager->addOrder(new Order(3, 'Completed', 0, $foodItemsOrder3));
+        $this->orderManager->addOrder(new Order(1, 'Pending', 30, $foodItemsOrder1, 0));
+        $this->orderManager->addOrder(new Order(2, 'In Progress', 20, $foodItemsOrder2, 0));
+        $this->orderManager->addOrder(new Order(3, 'Completed', 0, $foodItemsOrder3, 0));
     }
 
     public function index()
@@ -94,7 +94,7 @@ class ListController extends Controller
             new FoodItem('Soda', 3, 300)
         ];
 
-        $order = new Order(1, 'Pending', 30, $foodItems);
+        $order = new Order(1, 'Pending', 30, $foodItems, 0);
         $orderManager = new OrderManager();
         $orderManager->notifyCustomer($order->getId(), 'Order time has been updated to 15 minutes.');
 
@@ -109,7 +109,7 @@ class ListController extends Controller
             new FoodItem('Garlic Bread', 7, 250)
         ];
 
-        $order = new Order(2, 'In Progress', 20, $foodItems);
+        $order = new Order(2, 'In Progress', 20, $foodItems, 0);
         $orderManager = new OrderManager();
         $orderManager->notifyCourier($order->getId(), 'Order time has been updated to 10 minutes.');
 

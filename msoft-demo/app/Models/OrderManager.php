@@ -59,7 +59,7 @@ class OrderManager
         }
     }
 
-    private function findOrderById($orderId)
+    public function findOrderById($orderId)
     {
         foreach ($this->orders as $order) {
             if ($order->getId() === $orderId) {
@@ -87,5 +87,37 @@ class OrderManager
     public function cancelChange()
     {
         echo "<script>alert('Changes canceled.');</script>";
+    }
+
+    public function acceptOrder($orderId)
+    {
+        $order = $this->findOrderById($orderId);
+        if ($order) {
+            $order->setStatus('Accepted'); // Call `changeState` method in `Order`
+            echo "<script>alert('Order #{$orderId} has been accepted.');</script>";
+        }
+        return 'Accepted';
+    }
+
+    public function assignCourier($orderId, $courierId)
+    {
+        $order = $this->findOrderById($orderId);
+        if ($order) {
+            $order->assignCourier($courierId);
+        }
+        return 1;
+    }
+
+    public function cancelOrder($orderId)
+    {
+        $this->notifyCourier($orderId, 'Order has been canceled by restaurant worker.');
+    }
+    public function markAsPickedUp($order)
+    {
+        $order->setStatus('Picked Up');
+
+        $this->notifyCustomer($order->getId(), "Customer was notified about the order pickup.");
+
+        return 'Picked Up';
     }
 }
