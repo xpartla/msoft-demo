@@ -45,6 +45,7 @@ class OrderManager
                 'id' => $order->getId(),
                 'status' => $order->getStatus(),
                 'time' => $order->getTime(),
+                'items' => $order->getItems(),
             ];
         }
         return null;
@@ -76,5 +77,15 @@ class OrderManager
     public function notifyCourier($orderId, $message)
     {
         $this->notificationManager->notify('Courier', $message);
+    }
+
+    public function showErrorMessage($message)
+    {
+        echo "<script>alert('$message');</script>";
+    }
+
+    public function cancelChange()
+    {
+        echo "<script>alert('Changes canceled.');</script>";
     }
 }

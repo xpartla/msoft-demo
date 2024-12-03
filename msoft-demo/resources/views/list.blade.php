@@ -34,7 +34,7 @@
     @foreach ($activeOrders as $order)
         <li>
             <a href="#" class="order-link" data-id="{{ $order->getId() }}">
-                Order #{{ $order->getId() }} ({{ $order->getStatus() }})
+                Order #{{ $order->getId() }} ({{ $order->getStatus() }}) Time remaining: {{ $order->getTime() }} min.
             </a>
         </li>
     @endforeach
@@ -48,6 +48,9 @@
     <label for="time-input">Edit Remaining Time:</label>
     <input type="number" id="time-input" min="0" />
     <button onclick="updateTime()">Save</button>
+    <button onclick="cancelChange()">Cancel</button>
+    <h3>Items</h3>
+    <ul id="detail-items" style="list-style: none; padding: 0;"></ul>
 </div>
 
 <div>
@@ -66,11 +69,22 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    const { id, status, time } = data.data;
+                    const { id, status, time, items } = data.data;
                     document.getElementById('detail-id').textContent = id;
                     document.getElementById('detail-status').textContent = status;
                     document.getElementById('detail-time').textContent = time;
                     document.getElementById('time-input').value = time;
+
+                    // Clear existing items
+                    const itemsList = document.getElementById('detail-items');
+                    itemsList.innerHTML = '';
+
+                    // Populate items
+                    items.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = `${item.name} - $${item.price} (${item.weight}g)`;
+                        itemsList.appendChild(li);
+                    });
 
                     document.getElementById('order-details').style.display = 'block';
                 } else {
@@ -82,6 +96,22 @@
     function updateTime() {
         const orderId = parseInt(document.getElementById('detail-id').textContent);
         const newTime = parseInt(document.getElementById('time-input').value);
+
+        if (newTime > 45) {
+            fetch('/show-error-message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken },
+                body: JSON.stringify({ message: 'Order time cannot exceed 45 minutes.' })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        alert('Error showing error message.');
+                    }
+                });
+            alert('Order time cannot exceed 45 minutes.');
+            return;
+        }
 
         fetch('/update-order-time', {
             method: 'POST',
@@ -97,6 +127,11 @@
                     alert('Failed to update order time.');
                 }
             });
+    }
+
+    function cancelChange() {
+        document.getElementById('time-input').value = document.getElementById('detail-time').textContent;
+        alert('Changes canceled.');
     }
 
     document.querySelectorAll('.order-link').forEach(link => {

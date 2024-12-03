@@ -56,7 +56,21 @@ class ListController extends Controller
         $orderDetail = $this->orderManager->getOrderDetail($orderId);
 
         if ($orderDetail) {
-            return response()->json(['success' => true, 'data' => $orderDetail]);
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'id' => $orderDetail['id'],
+                    'status' => $orderDetail['status'],
+                    'time' => $orderDetail['time'],
+                    'items' => array_map(function ($item) {
+                        return [
+                            'name' => $item->getName(),
+                            'price' => $item->getPrice(),
+                            'weight' => $item->getWeight()
+                        ];
+                    }, $orderDetail['items'])
+                ]
+            ]);
         }
 
         return response()->json(['success' => false, 'message' => 'Order not found']);
@@ -102,4 +116,13 @@ class ListController extends Controller
         // Pass order to the courier view
         return view('courier-pov', compact('order'));
     }
+
+    public function showErrorMessage(Request $request)
+    {
+        $message = $request->input('message');
+        $this->orderManager->showErrorMessage($message);
+
+        return response()->json(['success' => true]);
+    }
+
 }
