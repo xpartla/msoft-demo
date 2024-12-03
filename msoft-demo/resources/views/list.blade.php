@@ -10,6 +10,22 @@
         .order-list { list-style-type: none; padding: 0; }
         .order-list li { margin: 10px 0; }
         .order-details { margin-top: 20px; padding: 10px; border: 1px solid #ccc; display: none; }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -34,6 +50,10 @@
     <button onclick="updateTime()">Save</button>
 </div>
 
+<div>
+    <a href="{{ route('customer.pov') }}" class="button">Customer POV</a>
+    <a href="{{ route('courier.pov') }}" class="button">Courier POV</a>
+</div>
 <script>
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 

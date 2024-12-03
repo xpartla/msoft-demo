@@ -7,12 +7,14 @@ class Order
     private $id;
     private $status;
     private $time;
+    private $items;
 
-    public function __construct($id, $status, $time)
+    public function __construct($id, $status, $time, $items)
     {
         $this->id = $id;
         $this->status = $status;
         $this->time = $time;
+        $this->items = $items;
     }
 
     public function getId()
@@ -44,4 +46,16 @@ class Order
     {
         $this->time = $time;
     }
+
+    public function addItem(FoodItem $item)
+    {
+        $this->items[] = $item;
+    }
+
+    public function getItems()
+    {
+        return $this->items;
+    }
 }
+
+

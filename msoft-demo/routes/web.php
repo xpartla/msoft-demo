@@ -25,3 +25,5 @@ Route::get('/list', [ListController::class, 'index']);
 Route::post('/get-order-detail', [ListController::class, 'getOrderDetail']);
 Route::post('/update-order-time', [ListController::class, 'updateOrderTime']);
 
+Route::get('/customer-pov', [ListController::class, 'customerPov'])->name('customer.pov');
+Route::get('/courier-pov', [ListController::class, 'courierPov'])->name('courier.pov');

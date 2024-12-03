@@ -6,11 +6,13 @@ class OrderManager
 {
     private $orders;
     private $orderTimeManager;
+    private $notificationManager;
 
     public function __construct()
     {
         $this->orders = [];
         $this->orderTimeManager = new OrderTimeManager();
+        $this->notificationManager = new NotificationManager();
     }
 
     public function addOrder(Order $order)
@@ -64,5 +66,15 @@ class OrderManager
             }
         }
         return null;
+    }
+
+    public function notifyCustomer($orderId, $message)
+    {
+        $this->notificationManager->notify('Customer', $message);
+    }
+
+    public function notifyCourier($orderId, $message)
+    {
+        $this->notificationManager->notify('Courier', $message);
     }
 }
