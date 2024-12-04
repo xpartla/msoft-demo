@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\NavigationService;
+
 class OrderManager
 {
     private $orders;
@@ -119,5 +121,42 @@ class OrderManager
         $this->notifyCustomer($order->getId(), "Customer was notified about the order pickup.");
 
         return 'Picked Up';
+    }
+
+    public function check($type)
+    {
+        $navigationService = new NavigationService();
+        $navigationService->isNearby($type);
+        $foodItems = [
+            new FoodItem('Pizza', 10, 450),
+        ];
+
+        return new Order(3,'Available', 35, $foodItems, 0);
+    }
+
+    public function decline($order)
+    {
+        $this->blackListCourier($order->getId());
+        return $order;
+    }
+
+    public function blackListCourier($id)
+    {
+        //logic to not allow courier to see the order
+        return 0;
+    }
+
+    public function changeState($orderId)
+    {
+        $order = $this->findOrderById($orderId);
+        if ($order) {
+            $order->setStatus('Prepared');
+        }
+        return 'Prepared';
+    }
+
+    public function checkTime($order1, $order2)
+    {
+        return $order1->getTime() < $order2->getTime() ? $order1 : $order2;
     }
 }

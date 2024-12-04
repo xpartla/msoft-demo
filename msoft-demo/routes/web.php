@@ -45,4 +45,13 @@ Route::post('/assign', [AssignController::class, 'cancelOrder'])->name('assign')
 Route::post('/orderIsPrepared', [AssignController::class, 'isPrepared'])->name('orderIsPrepared');
 Route::post('/markAsPickedUp', [AssignController::class, 'markAsPickedUp'])->name('markAsPickedUp');
 
+Route::get('/two-orders', [OrderController::class, 'twoOrders']);
+Route::post('/acceptOrder', [OrderController::class, 'courierAcceptOrder'])->name('acceptOrder');
+Route::post('/nearbyOrder', [OrderController::class, 'checkNearbyOrders'])->name('nearbyOrder');
 
+Route::post('/acceptSecondOrder', [OrderController::class, 'courierAcceptSecondOrder'])->name('acceptSecondOrder');
+Route::post('/declineSecondOrder', [OrderController::class, 'courierDeclineSecondOrder'])->name('declineSecondOrder');
+
+Route::post('/changeState', [OrderController::class, 'changeState'])->name('changeState');
+
+Route::post('/nearbyOrderIsPrepared', [OrderController::class, 'nearbyOrderIsPrepared'])->name('nearbyOrderIsPrepared');
