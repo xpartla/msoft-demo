@@ -1,0 +1,123 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #343a40;
+    line-height: 1.6;
+}
+
+/* Header styling */
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #007bff;
+    color: white;
+    margin: 0;
+}
+
+/* List styling */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+li {
+    background-color: #ffffff;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-link {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.order-link:hover {
+    text-decoration: underline;
+}
+
+/* Order details section styling */
+.order-details {
+    display: none;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-details h2 {
+    margin-top: 0;
+    color: #343a40;
+}
+
+.order-details p {
+    margin: 10px 0;
+}
+
+.order-details label {
+    display: block;
+    margin: 10px 0;
+}
+
+.order-details input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button styling */
+button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Navigation buttons */
+.button {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 20px 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Item list styling */
+#detail-items {
+    margin: 0;
+    padding: 0;
+}
+
+#detail-items li {
+    background-color: #f8f9fa;
+    padding: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}

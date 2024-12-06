@@ -55,10 +55,10 @@ class AssignController extends Controller
             new FoodItem('Fries', 5, 150),
             new FoodItem('Soda', 3, 300)
         ];
-
+        $buttonHelper = 1;
         $order = new Order(1, 'Pending', 30, $foodItems, 0);
 
-        return view('courier-availability', compact('order'));
+        return view('courier-availability', compact('order', 'buttonHelper'));
     }
 
     public function isPrepared()
@@ -86,7 +86,7 @@ class AssignController extends Controller
         $order = new Order(1, 'Picked Up', 20, $foodItems, 1);
         $orderManager = new OrderManager();
         $orderManager->markAsPickedUp($order);
-        $navigation = $order->navigate(2);
+        $navigation = $order->navigate(3);
         return view('courier-accept', compact('order', 'navigation'));
     }
 }

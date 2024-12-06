@@ -21,8 +21,8 @@ class OrderController extends Controller
         $order = new Order(1, $orderManager->acceptOrder(1), 30, $foodItems, 0);
         $orderManager->acceptOrder(1);
         $orderManager->notifyCustomer($order->getId(), 'Notification sent to customer, order has been accepted.');
-
-        return view('courier-availability', compact('order'));
+        $buttonHelper = 2;
+        return view('courier-availability', compact('order', 'buttonHelper'));
     }
 
     public function prepareAcceptOrder(Request $request)

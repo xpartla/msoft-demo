@@ -5,32 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order List</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .order-list { list-style-type: none; padding: 0; }
-        .order-list li { margin: 10px 0; }
-        .order-details { margin-top: 20px; padding: 10px; border: 1px solid #ccc; display: none; }
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 10px;
-            cursor: pointer;
-        }
-
-        .button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style-2.css') }}" >
 </head>
 <body>
 <h1>Active Orders</h1>
-<ul class="order-list">
+<ul >
     @foreach ($activeOrders as $order)
         <li>
             <a href="#" class="order-link" data-id="{{ $order->getId() }}">
