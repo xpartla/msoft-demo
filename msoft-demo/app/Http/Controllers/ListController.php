@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Courier;
-use App\Models\Customer;
+use App\Managers\OrderManager;
 use App\Models\FoodItem;
 use App\Models\Order;
-use App\Models\OrderManager;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
@@ -16,10 +14,8 @@ class ListController extends Controller
 
     public function __construct()
     {
-        // Initialize OrderManager with mock data
         $this->orderManager = new OrderManager();
 
-        // Create food items
         $foodItemsOrder1 = [
             new FoodItem('Burger', 10, 200),
             new FoodItem('Fries', 5, 150),
@@ -36,7 +32,6 @@ class ListController extends Controller
             new FoodItem('Salad', 6, 100),
         ];
 
-        // Add orders with food items
         $this->orderManager->addOrder(new Order(1, 'Pending', 30, $foodItemsOrder1, 0));
         $this->orderManager->addOrder(new Order(2, 'In Progress', 20, $foodItemsOrder2, 0));
         $this->orderManager->addOrder(new Order(3, 'Completed', 0, $foodItemsOrder3, 0));
@@ -44,7 +39,6 @@ class ListController extends Controller
 
     public function index()
     {
-        // Get active orders
         $activeOrders = collect($this->orderManager->getActiveOrders());
 
         return view('list', compact('activeOrders'));
@@ -94,11 +88,9 @@ class ListController extends Controller
             new FoodItem('Soda', 3, 300)
         ];
 
-        $order = new Order(1, 'Pending', 30, $foodItems, 0);
+        $order = new Order(1, 'Pending', 15, $foodItems, 0);
         $orderManager = new OrderManager();
         $orderManager->notifyCustomer($order->getId(), 'Order time has been updated to 15 minutes.');
-
-        // Pass order to the customer view
         return view('customer-pov', compact('order'));
     }
 
@@ -108,12 +100,9 @@ class ListController extends Controller
             new FoodItem('Pizza', 15, 400),
             new FoodItem('Garlic Bread', 7, 250)
         ];
-
-        $order = new Order(2, 'In Progress', 20, $foodItems, 0);
+        $order = new Order(2, 'In Progress', 10, $foodItems, 0);
         $orderManager = new OrderManager();
         $orderManager->notifyCourier($order->getId(), 'Order time has been updated to 10 minutes.');
-
-        // Pass order to the courier view
         return view('courier-pov', compact('order'));
     }
 

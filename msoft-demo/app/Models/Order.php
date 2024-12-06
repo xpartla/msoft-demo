@@ -41,12 +41,6 @@ class Order
         $this->status = $status;
     }
 
-    public function changeState($newState)
-    {
-        $this->status = $newState;
-    }
-
-
     public function getTime()
     {
         return $this->time;

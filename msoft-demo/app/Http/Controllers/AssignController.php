@@ -2,49 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Managers\OrderManager;
 use App\Models\Courier;
 use App\Models\FoodItem;
 use App\Models\Order;
-use App\Models\OrderManager;
 use App\Services\CourierService;
 use Illuminate\Http\Request;
 
 class AssignController extends Controller
 {
-    protected $courierService;
+    private OrderManager $orderManager;
+    private CourierService $courierService;
+    private ?Order $order = null;
+    private ?Order $nearbyOrder = null;
 
-    public function __construct(CourierService $courierService)
+    public function __construct(OrderManager $orderManager, CourierService $courierService)
     {
+        $this->orderManager = $orderManager;
         $this->courierService = $courierService;
+        $this->initializeOrders();
+
+    }
+    private function initializeOrders(): void
+    {
+        $foodItems = [
+            new FoodItem('Coffee', 10, 200),
+            new FoodItem('Cake', 5, 150)
+        ];
+        $this->order = new Order(1, 'Assigned', 25, $foodItems, 1);
+
+        $foodItemsSecondOrder = [
+            new FoodItem('Pizza', 10, 450),
+        ];
+        $this->nearbyOrder = new Order(3, 'Assigned', 20, $foodItemsSecondOrder, 1);
     }
 
     public function index()
     {
-        // Create a mock courier instance
         $courier = new Courier(1, 'John Doe', false);
 
-        // Pass the courier to the view
         return view('assign-and-pickup', ['courier' => $courier]);
     }
 
     public function cancelOrder(){
         $courier = new Courier(1, 'John Doe', true);
-        $orderManager = new OrderManager();
-        $orderManager->cancelOrder(1);
-        // Pass the courier to the view
+        $this->orderManager->cancelOrder(1);
         return view('assign-and-pickup', ['courier' => $courier]);
     }
 
     public function makeAvailable(Request $request)
     {
-        // Retrieve the courier instance based on the submitted ID
         $id = $request->input('id');
         $courier = new Courier($id, 'John Doe', false); // Mocking the same courier for simplicity
 
-        // Mark the courier as available
         $this->courierService->becomeAvailable($courier);
 
-        // Redirect to the new page
         return redirect()->route('courier-availability')->with('success', 'Courier is now available.');
     }
 
@@ -63,13 +75,10 @@ class AssignController extends Controller
 
     public function isPrepared()
     {
-        $foodItems = [
-            new FoodItem('Burger', 10, 200),
-            new FoodItem('Fries', 5, 150),
-            new FoodItem('Soda', 3, 300)
-        ];
 
-        $order = new Order(1, 'Prepared', 20, $foodItems, 1);
+        $order = $this->order;
+        $order->setStatus('Prepared');
+        $order->setTime('20');
         $order->isPrepared();
         $navigation = $order->navigate(1);
         return view('courier-accept', compact('order', 'navigation'));
@@ -77,15 +86,9 @@ class AssignController extends Controller
 
     public function markAsPickedUp()
     {
-        $foodItems = [
-            new FoodItem('Burger', 10, 200),
-            new FoodItem('Fries', 5, 150),
-            new FoodItem('Soda', 3, 300)
-        ];
-
-        $order = new Order(1, 'Picked Up', 20, $foodItems, 1);
-        $orderManager = new OrderManager();
-        $orderManager->markAsPickedUp($order);
+        $order = $this->order;
+        $order->setStatus($this->orderManager->markAsPickedUp($order));
+        $order->setTime('15');
         $navigation = $order->navigate(3);
         return view('courier-accept', compact('order', 'navigation'));
     }

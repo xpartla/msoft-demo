@@ -13,8 +13,6 @@
         <p><strong>Courier Name:</strong> {{ $courier->getName() }}</p>
         <p><strong>Courier ID:</strong> {{ $courier->getId() }}</p>
         <p><strong>Availability:</strong> {{ $courier->isAvailable() ? 'Available' : 'Unavailable' }}</p>
-
-        <!-- Button to Make Available -->
         <?php if (!$courier->isAvailable()): ?>
         <form action="{{ route('make-available') }}" method="POST">
             @csrf

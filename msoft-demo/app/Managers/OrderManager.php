@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Managers;
 
+use App\Models\FoodItem;
+use App\Models\Order;
 use App\Services\NavigationService;
 
 class OrderManager
@@ -95,7 +97,8 @@ class OrderManager
     {
         $order = $this->findOrderById($orderId);
         if ($order) {
-            $order->setStatus('Accepted'); // Call `changeState` method in `Order`
+            $this->assignCourier($orderId, $order->getCourier());
+            $order->setStatus('Accepted');
             echo "<script>alert('Order #{$orderId} has been accepted.');</script>";
         }
         return 'Accepted';
@@ -142,7 +145,7 @@ class OrderManager
 
     public function blackListCourier($id)
     {
-        //logic to not allow courier to see the order
+        //only for demonstration, in real world would include logic to prevent the order from showing up to courier
         return 0;
     }
 

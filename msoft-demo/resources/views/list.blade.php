@@ -54,11 +54,9 @@
                     document.getElementById('detail-time').textContent = time;
                     document.getElementById('time-input').value = time;
 
-                    // Clear existing items
                     const itemsList = document.getElementById('detail-items');
                     itemsList.innerHTML = '';
 
-                    // Populate items
                     items.forEach(item => {
                         const li = document.createElement('li');
                         li.textContent = `${item.name} - $${item.price} (${item.weight}g)`;

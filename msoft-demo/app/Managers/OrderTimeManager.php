@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Managers;
+
+use App\Models\Order;
 
 class OrderTimeManager
 {

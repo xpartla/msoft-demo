@@ -8,7 +8,7 @@
 
 </head>
 <body>
-<h1>Courier Availability</h1>
+<h1>Restaurant View</h1>
 
 <div class="order-card">
     <div class="order-details">
@@ -23,7 +23,6 @@
             @endforeach
         </ul>
         <?php if($buttonHelper == 1): ?>
-            <!-- Button to accept order -->
         <form action="{{ route('accept-order') }}" method="POST">
             @csrf
             <input type="hidden" name="orderId" value="{{ $order->getId() }}">

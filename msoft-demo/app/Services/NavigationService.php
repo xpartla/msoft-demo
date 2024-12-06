@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\NotificationManager;
-use App\Models\OrderManager;
+use App\Managers\OrderManager;
 
 class NavigationService
 {
