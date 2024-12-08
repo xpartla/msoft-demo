@@ -26,7 +26,6 @@ class OrderManager
 
     public function getActiveOrders()
     {
-        // Filter active orders (assuming "Completed" is not active)
         return array_filter($this->orders, function (Order $order) {
             return $order->getStatus() !== 'Completed';
         });
@@ -101,6 +100,7 @@ class OrderManager
             $order->setStatus('Accepted');
             echo "<script>alert('Order #{$orderId} has been accepted.');</script>";
         }
+        //for demonstration
         return 'Accepted';
     }
 
